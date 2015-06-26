@@ -15,6 +15,7 @@ public class FileSystemPointer implements FilePointer {
 	private final File target;
 	private final HashCode tag;
 	private final MediaType mediaTypeOrNull;
+	public static final String QUOTE = "\"";
 
 	public FileSystemPointer(File target) {
 		try {
@@ -50,7 +51,7 @@ public class FileSystemPointer implements FilePointer {
 
 	@Override
 	public String getEtag() {
-		return "\"" + tag + "\"";
+		return QUOTE + tag + QUOTE;
 	}
 
 	@Override

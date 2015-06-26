@@ -52,14 +52,12 @@ public class ExistingFile {
 	}
 
 	private boolean cached(Optional<String> requestEtagOpt, Optional<Date> ifModifiedSinceOpt) {
-		final boolean matchingEtag = requestEtagOpt
+		return requestEtagOpt
 				.map(filePointer::matchesEtag)
-				.orElse(false);
-		final boolean notModifiedSince = ifModifiedSinceOpt
-				.map(Date::toInstant)
-				.map(filePointer::modifiedAfter)
-				.orElse(false);
-		return matchingEtag || notModifiedSince;
+				.orElse(ifModifiedSinceOpt
+					.map(Date::toInstant)
+					.map(filePointer::modifiedAfter)
+					.orElse(false));
 	}
 
 	private ResponseEntity<Resource> redirectDownload(FilePointer filePointer) {
